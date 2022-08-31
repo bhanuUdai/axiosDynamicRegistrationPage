@@ -28,42 +28,47 @@ axios.post("https://crudcrud.com/api/f546f4e39944421a868f9bd782f683fb/appointmen
     console.log(err)
 })
 
-// //pushing in local storage (key, value)
-// localStorage.setItem(obj.email,JSON.stringify(obj));
-
-// onScreen(obj)  //calling function (A)
-
 }
 
-window.addEventListener('DOMContentLoaded',onload); // creating DOMContent event which fire when page is reloaded or refreshed
+// creating DOMContent event which fire when page is reloaded or refreshed
+
+window.addEventListener('DOMContentLoaded',onload); 
 
 function onload(e)
 {
-
-    axios.get("https://crudcrud.com/api/f546f4e39944421a868f9bd782f683fb/appointmentApp")
-    .then((res)=>
-    {
-        let arr=[]
-        arr.push(res.data);
-        //console.log(arr)
-        arr.forEach((key)=>
+    axios.get("https://crudcrud.com/api/f546f4e39944421a868f9bd782f683fb/appointmentApp")  //getting resourse from the server which contains all the post values
+    .then((res)=>                                                                          // this res is complete resourse
+    {                                                                                      //res.data is an array containing data in form of objects [{},{},{}]
+        
+        for(let i=0;i<res.data.length;i++)
         {
-            onScreen(key)
-        })
+            onScreen(res.data[i])
+        }
+        
+        // iterating through the array and calling function to print values on screen
 
+        // let z=res.data
+        // z.forEach((key)=>
+        // {
+        //     console.log(key)
+        //     onScreen(key)
 
+        // })
     })
-    .ctach((err)=>
+    .catch((err)=>
     {
         console.log(err)
     })
+    
 
-    // Object.keys(localStorage).forEach((key)=>  //Object.keys() iused to get key, of input && applying loop to get stringify object from each key of local storage
+    // let localstorage=Object.keys(localStorage);
+    // for(let i=0;i<localstorage.length;i++)
     // {
-    //     let strigifiedobject=localStorage.getItem(key);   // here we get stringify data that is on local storage
-    //     let unstringifyobject=JSON.parse(strigifiedobject); // converting into original object
-    //     onScreen(unstringifyobject);                      // calling function(A) to print all fetch data from local storage on scereen
-    // })
+    //     let key=localstorage[i];
+    //     let stringifiedObj=localStorage.getItem(key);
+    //     let unstringifyobject=JSON.parse(stringifiedObj)
+    //     onScreen(unstringifyobject);
+    // }
 }
 
 //Showing name and email on screen
