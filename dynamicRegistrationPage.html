@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SharpApp</title>
+    </head>
+    <body>
+        <form id="my_form" onsubmit="savetoLocalStorage(event)">
+            <label for="name">Name</label>
+            <br>
+            <input type="text" id="name" name="username" required>
+            <br>
+            <label for="mail" >EMail</label>
+            <br>
+            <input type="text" id="mail" name="emailId" required>
+            <br>
+            <button>submit</button>
+            <br> </form>
+            <ul id="users"></ul>
+
+            <!-- pick url from axios library and paste it here to access axios -->
+            
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+        <script src="dynamicRegistrationPage.js"></script>
+    </body>
+</html>
