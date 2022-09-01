@@ -15,13 +15,12 @@ let obj={
 
 //here we are sending data through axios in crudcrud server having 'appointmentApp' rout and behind this rout is base that genrated on crudcrud
 
-axios.post("https://crudcrud.com/api/f546f4e39944421a868f9bd782f683fb/appointmentApp",obj)
+axios.post("https://crudcrud.com/api/7e1646cbc3d24868ae5c078ff42ffe1c/appointmentApp",obj)
 .then((res)=>
 {
     // when promise get resoloved(i.e data get sended), we will print it on screen by calling onScreen function
     // note that here we have to print data of resourse, not complete respourse , therefor (res.data)
     onScreen(res.data)
-    console.log(res.data)
 })
 .catch((err)=>
 {
@@ -36,7 +35,7 @@ window.addEventListener('DOMContentLoaded',onload);
 
 function onload(e)
 {
-    axios.get("https://crudcrud.com/api/f546f4e39944421a868f9bd782f683fb/appointmentApp")  //getting resourse from the server which contains all the post values
+    axios.get("https://crudcrud.com/api/7e1646cbc3d24868ae5c078ff42ffe1c/appointmentApp")  //getting resourse from the server which contains all the post values
     .then((res)=>                                                                          // this res is complete resourse
     {                                                                                      //res.data is an array containing data in form of objects [{},{},{}]
         
@@ -75,7 +74,7 @@ function onload(e)
 function onScreen(user)  //function (A)
 {
     let parentNode=document.querySelector('#users');
-    let childNode= `<li id=${user.email} > ${user.name} - ${user.email} <button onclick=editUser('${user.email}','${user.name}')>Edit</button>  <button onclick=deleteUser('${user.email}')> Delete </button> </li>`  //delete button is calling function (B) when clicked
+    let childNode= `<li id=${user._id} > ${user.name} - ${user.email} <button onclick=editUser('${user.email}','${user.name}')>Edit</button>  <button onclick=deleteUser('${user.email}','${user._id}')> Delete </button> </li>`  //delete button is calling function (B) when clicked
     parentNode.innerHTML=childNode+parentNode.innerHTML;
 }
 //Edit function to delete delail from screen and storage but highlight name and value in box that to be edit (function called bt edit button)
@@ -88,12 +87,22 @@ function editUser(emailId,username)
 
 
 //Delete
-function deleteUser(emailId)     //function(B)  //Note it will work with remove from screen function because if you dont remove it from screen it will form a loop and start printing same values insted of delete them.
-{
-    localStorage.removeItem(emailId)
-    removeFromScreen(emailId)   //calling function(C)
+function deleteUser(emailId,id)     //function(B)  
+{ 
+    axios.delete(`https://crudcrud.com/api/7e1646cbc3d24868ae5c078ff42ffe1c/appointmentApp/${id}`)  // put it in backticks so that it can acess id, otherwise it will take rout as 'id'
+    .then(()=>                                                                                      // that is string and not real id
+    {
+        removeFromScreen(id)
+    })
+    .catch((err)=>
+    {
+        console.log(err)
+    })
+
 }
-//it work with screen simultaneously
+
+
+
 function  removeFromScreen(emailId)  //function (C)
 {
     let parent1=document.querySelector('#users');
