@@ -2,8 +2,74 @@
 <html>
     <head>
         <title>SharpApp</title>
+        <style>
+            body
+            {
+                background-image: url('mount.jpg');
+            }
+            header{
+                text-align: center;
+                color: teal;
+                background-color: lavender;
+                width: 600px;
+                margin:auto;
+            }
+
+            form{
+                
+                width: 600px;
+                height: 175px;
+                margin:auto;
+                /* background-color: mintcream; */
+                
+            }
+
+            #name
+            {
+                width: 594px;
+                height :20px;
+                border:1px solid pink ;
+                color: brown;
+            }
+            #mail
+            {
+                width: 594px;
+                height :20px;
+                border:1px solid pink ;
+                color: brown;
+            }
+            div{
+                width: 600px;
+                height: 175px;
+                margin:auto;
+                /* color: yellow; */
+                
+            }
+            button
+            {
+                width: 130px;
+                height: 20px;
+            }
+            ._button{
+                width:65px;
+                height:25px;
+                text-align: center;
+            }
+            ._list
+            {
+                background-color: aqua;
+                /* width: 600px; */
+                border-left-width: 9px;
+                border-left-style: solid;
+                border-left-color: aqua;
+            }
+
+        </style>
     </head>
     <body>
+        <header>
+            <h1>Appointment Application</h1>
+        </header>
         <form id="my_form" onsubmit="savetoLocalStorage(event)">
             <label for="name">Name</label>
             <br>
@@ -13,9 +79,13 @@
             <br>
             <input type="text" id="mail" name="emailId" required>
             <br>
-            <button>submit</button>
+            <br>
+            <button>Submit</button>
             <br> </form>
-            <ul id="users"></ul>
+            <div>
+                <ul id="users"></ul>
+            </div>
+            
 
             <!-- pick url from axios library and paste it here to access axios -->
             
