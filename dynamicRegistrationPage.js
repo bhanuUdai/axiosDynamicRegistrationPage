@@ -23,79 +23,61 @@ function savetoLocalStorage(event)
     }
 
 
-
- if(ID)
- {
-        axios.put(`https://crudcrud.com/api/388a6deea4e941648343d6dc0c9dab8c/appointmentApp/${ID}`,obj)
-    .then((res)=>
-    {   
-        onScreenAfterEdit()
-        ID=''
-    })
-    .catch((err)=>
+// put request will be sent if ID have some value
+//put returns nothing in resourse
+    if(ID)
     {
-        console.log(err)
-    })
+            axios.put(`https://crudcrud.com/api/c5a374a4fac04afb82157b054a806bbb/appointmentApp/${ID}`,obj)
+        .then((res)=>
+        {   
+            onScreenAfterEdit()
+        })
+        .catch((err)=>
+        {
+            console.log(err)
+        })
+        }
+
+    else  //new data will posted
+    {
+
+        //here we are sending data through axios in crudcrud server having 'appointmentApp' rout and behind this rout is base that genrated on crudcrud
+
+        axios.post("https://crudcrud.com/api/c5a374a4fac04afb82157b054a806bbb/appointmentApp",obj)
+        .then((res)=>
+        {
+            // when promise get resoloved(i.e data get sended), we will print it on screen by calling onScreen function
+            // note that here we have to print data of resourse, not complete respourse , therefor (res.data)
+            
+            onScreen(res.data)
+            
+        })
+        .catch((err)=>
+        {
+            console.log(err)
+        })
+
+
     }
 
-else
-{
-
-    //here we are sending data through axios in crudcrud server having 'appointmentApp' rout and behind this rout is base that genrated on crudcrud
-
-    axios.post("https://crudcrud.com/api/388a6deea4e941648343d6dc0c9dab8c/appointmentApp",obj)
-    .then((res)=>
-    {
-        // when promise get resoloved(i.e data get sended), we will print it on screen by calling onScreen function
-        // note that here we have to print data of resourse, not complete respourse , therefor (res.data)
-        
-        onScreen(res.data)
-        
-    })
-    .catch((err)=>
-    {
-        console.log(err)
-    })
-
-
 }
 
-
-
-}
-
-//priniting all data agin o dom after wiping 
+//geting edited data from server and printing on screen
 function onScreenAfterEdit()
 {
     
 
-    axios.get("https://crudcrud.com/api/388a6deea4e941648343d6dc0c9dab8c/appointmentApp")  
-    .then((res)=>                                                                          
-    {                                                                                      
-        wipeScreen()
-
-        for(let i=0;i<res.data.length;i++)
-        {
-            onScreen(res.data[i])
-        }
-       
+    axios.get(`https://crudcrud.com/api/c5a374a4fac04afb82157b054a806bbb/appointmentApp/${ID}`)
+    .then((res)=>
+    {
+        onScreen(res.data)
+        ID=''                    //clearing ID to avoid repeat
+        
     })
     .catch((err)=>
     {
         console.log(err)
     })
-}
-
-//wiping all data from screen from dom
-function wipeScreen()
-{
-    let parentNode=document.querySelector('#users')
-    let node=document.querySelectorAll('._list')
-    node.forEach((key)=>
-    {
-        parentNode.removeChild(key)
-    })
-
 }
 
 // creating DOMContent event which fire when page is reloaded or refreshed
@@ -103,7 +85,7 @@ window.addEventListener('DOMContentLoaded',onload);
 
 function onload(e)
 {
-    axios.get("https://crudcrud.com/api/388a6deea4e941648343d6dc0c9dab8c/appointmentApp")  //getting resourse from the server which contains all the post values
+    axios.get("https://crudcrud.com/api/c5a374a4fac04afb82157b054a806bbb/appointmentApp")  //getting resourse from the server which contains all the post values
     .then((res)=>                                                                          // this res is complete resourse
     {                                                                                      //res.data is an array containing data in form of objects [{},{},{}]
         
@@ -144,7 +126,7 @@ function editUser(id,username,emailId)
 //Delete
 function deleteUser(id)     //function(B)  
 { 
-    axios.delete(`https://crudcrud.com/api/388a6deea4e941648343d6dc0c9dab8c/appointmentApp/${id}`)  // put it in backticks so that it can acess id, otherwise it will take rout as 'id'
+    axios.delete(`https://crudcrud.com/api/c5a374a4fac04afb82157b054a806bbb/appointmentApp/${id}`)  // put it in backticks so that it can acess id, otherwise it will take rout as 'id'
     .then(()=>                                                                                      // that is string and not real id
     {
         removeFromScreen(id)
